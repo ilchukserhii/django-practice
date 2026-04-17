@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h1>TODO list</h1>
+    </div>
+    <div>
+      <a class="btn btn-primary" href="{% url 'todolist:task-create' %}">
+        Create Task
+      </a>
+    </div>
+  </div>
+  <br>
+  {% if tasks %}
+    {% for task in tasks %}
+      <div class="border-bottom pb-2 mb-2">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            {{ task.content }}
+            {% if task.marked %}
+              <span class="text-success fw-bold">Done</span>
+            {% else %}
+              <span class="text-danger fw-bold">Not Done</span>
+            {% endif %}
+          </div>
+
+          <form action="{% url 'todolist:task-toggle' pk=task.id %}" method="post">
+            {% csrf_token %}
+            {% if task.marked %}
+              <input type="submit" value="Undo" class="btn btn-secondary">
+            {% else %}
+              <input type="submit" value="Mark as Done" class="btn btn-success">
+            {% endif %}
+          </form>
+        </div>
+        <p>Created at: {{ task.created_at }} {% if task.deadline %}{{ task.deadline }}{% endif %}</p>
+        <p>
+          Tags:
+          {% for tag in task.tags.all %}
+            {{ tag }}{% if not forloop.last %} {% endif %}
+          {% empty %}
+            No tags yet
+          {% endfor %}
+        </p>
+        <p>
+          <a href="{% url 'todolist:task-update' pk=task.id %}">Update</a>
+          <a href="{% url 'todolist:task-delete' pk=task.id %}">Delete</a>
+        </p>
+      </div>
+    {% empty %}
+      <p>There is no tasks</p>
+    {% endfor %}
+  {% else %}
+    <p>There is no tasks</p>
+  {% endif %}
+{% endblock %}

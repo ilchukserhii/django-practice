@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Static files (если используешь collectstatic)
+staticfiles/
+
+# Environment variables
+.env
+
+# PyCharm
+.idea/
+
+# VSCode (если вдруг)
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Migrations (опционально — иногда НЕ игнорят)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Coverage / тесты
+.coverage
+htmlcov/
+
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# mypy / flake8
+.mypy_cache/
+.pytest_cache/
+
+# Build
+dist/
+build/
+*.egg-info/
