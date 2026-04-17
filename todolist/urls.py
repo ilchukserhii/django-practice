@@ -5,7 +5,7 @@ from todolist.views import (
     TaskCreateView,
     TaskUpdateView,
     TaskDeleteView,
-    mark_tasks,
+    ToogleMarkTask,
     TagsListView,
     TagsCreateView,
     TagsUpdateView,
@@ -22,7 +22,7 @@ urlpatterns = [
     ),
     path(
         "<int:pk>/toggle-task/",
-        mark_tasks,
+        ToogleMarkTask.as_view(),
         name="task-toggle"
     ),
     path(

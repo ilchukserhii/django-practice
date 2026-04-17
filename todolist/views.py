@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
 from todolist.forms import TaskForm
 from todolist.models import Task, Tags
@@ -51,9 +52,9 @@ class TagsDeleteView(generic.DeleteView):
     success_url = reverse_lazy("todolist:tag-list")
 
 
-def mark_tasks(request, pk):
-    task = Task.objects.get(id=pk)
-    if request.method == "POST":
+class ToogleMarkTask(View):
+    def post(self, request, pk):
+        task = get_object_or_404(Task, id=pk)
         task.marked = not task.marked
         task.save()
-    return HttpResponseRedirect(reverse_lazy("todolist:task-list"))
+        return HttpResponseRedirect(reverse_lazy("todolist:task-list"))
